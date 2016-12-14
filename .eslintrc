@@ -1,0 +1,30 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true
+  },
+  "globals": {
+  },
+  "plugins": [
+  ],
+  "rules": {
+    "strict": [
+      2,
+      "global"
+    ],
+    "quotes": [
+      2,
+      "double"
+    ],
+    "max-params": [
+      2,
+      3
+    ]
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "d3-asset",
+  "version": "1.0.0",
+  "description": "Assets for d3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config ./config/webpack.config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/falizyer/d3-asset.git"
+  },
+  "author": "Dzmitry Hrachou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/falizyer/d3-asset/issues"
+  },
+  "homepage": "https://github.com/falizyer/d3-asset#readme",
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.20.0",
+    "babel-loader": "^6.2.9",
+    "babel-preset-es2015": "^6.18.0",
+    "eslint": "^3.12.2",
+    "eslint-loader": "^1.6.1",
+    "html-webpack-plugin": "^2.24.1",
+    "path": "^0.12.7",
+    "webpack": "^1.14.0",
+    "webpack-clean": "^1.0.0",
+    "yargs": "^6.5.0"
+  }
+}
