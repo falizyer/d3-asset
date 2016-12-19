@@ -29,5 +29,9 @@
     "webpack": "^1.14.0",
     "webpack-clean": "^1.0.0",
     "yargs": "^6.5.0"
+  },
+  "dependencies": {
+    "d3": "^4.4.0",
+    "lodash": "^4.17.2"
   }
 }
