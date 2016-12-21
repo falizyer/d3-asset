@@ -18,8 +18,11 @@ const config = {
         path: "./dist"
     },
     babel: {
-        presets: ["es2015"],
-        plugins: []
+        presets: ["es2015", "stage-0"],
+        plugins: [
+            "transform-decorators-legacy",
+            "transform-class-properties"
+        ]
     }
 };
 

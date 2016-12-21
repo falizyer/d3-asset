@@ -1,51 +1,23 @@
-import {debounce} from "lodash";
-import {scaleLinear} from "d3";
+import {LineElement} from "./line-element.class";
 
 export class LineChart {
 
     constructor(parent, settings) {
+        this.line = new LineElement(parent, {
+            selector: ["lines"],
+            alias: ["line-1", "line-2"]
+        });
         const {
-            width,
-            height
-        } = settings;
-        this.parent = parent;
-        this.width = width;
-        this.height = height;
-
-        this.x = {
-            className: "x-axis",
-            label: "x-label",
-            scale: scaleLinear()
-                .range([0, this.width])
-        };
-        this.y = {
-            className: "y-axis",
-            label: "y-label",
-            scale: scaleLinear()
-                .range([0, this.height])
-        };
-
-        this.data = [];
-
-    }
-
-    configure(settings) {
-        const {
-            width = this.width,
-            height = this.height
+            width, height
         } = settings;
         this.width = width;
         this.height = height;
-        this.x.scale.range([0, this.width]);
-        this.y.scale.range([0, this.height]);
     }
 
-    render() {
-
+    configure() {
     }
 
-    update(data) {
-        this.data = data;
-        return this.render();
+    render(data) {
+        this.line.render(data);
     }
 }
