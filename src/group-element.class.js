@@ -10,13 +10,16 @@ export class GroupElement {
         this.parent = parent;
         const {
             alias = [],
-            selector
+            selector,
+            translate = [0, 0]
         } = settings;
         this.selector = selector;
         this.alias = alias;
+        this.translate = translate;
     }
 
     render(data) {
+        window.console.log(this.getSelector(this.selector));
         let selection = this.parent.selectAll(this.getSelector(this.selector))
             .data(data);
         if (selection.empty()) {
@@ -24,6 +27,7 @@ export class GroupElement {
                 .append(this.getTagName())
                 .attr("class", (d, i) => this.getClassName(this.selector, this.alias[i]));
         }
-        return selection;
+        return selection
+            .attr("transform", `translate(${this.translate})`);
     }
 }
