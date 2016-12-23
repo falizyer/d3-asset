@@ -1,4 +1,5 @@
-import {axisTop, axisLeft, axisBottom, axisRight, format} from "d3";
+import {axisTop, axisLeft, axisBottom, axisRight, format, interpolateBasis} from "d3";
+import {primitiveChild} from "./decorators/primitive-child.decorator";
 import {GroupElement} from "./group-element.class";
 
 export const AXIS_DIRECTION = {
@@ -8,6 +9,10 @@ export const AXIS_DIRECTION = {
     RIGHT: Symbol("RIGHT")
 };
 
+@primitiveChild({
+    tagName: "text",
+    selector: ["axis-label"]
+})
 export class AxisElement extends GroupElement {
 
     static getAxisByDirection(direction, scale) {
@@ -28,6 +33,7 @@ export class AxisElement extends GroupElement {
     constructor(parent, settings) {
         super(parent, settings);
         const {
+            padding = 0,
             ticks = 10,
             scale,
             direction,
@@ -37,6 +43,7 @@ export class AxisElement extends GroupElement {
         } = settings;
         this.direction = direction;
         this.scale = scale;
+        this.padding = padding;
         this.tickSizeOuter = tickSizeOuter;
         this.tickSizeInner = tickSizeInner;
         this.tickPadding = tickPadding;
@@ -49,8 +56,39 @@ export class AxisElement extends GroupElement {
             .ticks(this.ticks);
     }
 
-    render(data) {
-        const parent = super.render(data);
-        return parent.call(this.axis);
+    render(data = "") {
+        const parent = super.render([data]);
+        return parent
+            .call(this.axis)
+            .call(selection => {
+                let label = selection.selectAll(this.getChildSelector())
+                    .data([data]);
+                if (label.empty()) {
+                    label = label.enter()
+                        .append(this.getChildTagName())
+                        .attr("class", this.getChildClassName());
+                }
+                let i = interpolateBasis(this.scale.domain());
+                let x, y, angle;
+                switch (this.direction) {
+                    case AXIS_DIRECTION.TOP:
+                        x = this.scale(i(0.5));
+                        y = -this.padding;
+                        angle = 0;
+                        break;
+                    case AXIS_DIRECTION.LEFT:
+                        x = -this.padding;
+                        y = this.scale(i(0.5));
+                        angle = -90;
+                        break;
+                    default:
+                        throw new Error(`transform: ${String(this.direction)}`);
+                }
+                label
+                    .attr("text-anchor", "middle")
+                    .attr("transform", `translate(${[x, y]}) rotate(${angle})`)
+                    .attr("fill", "black")
+                    .text(d => d);
+            });
     }
 }

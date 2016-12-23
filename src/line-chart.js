@@ -9,8 +9,11 @@ export class LineChart {
             width = 800,
             height = 400,
             alias,
+            labelPadding = 20,
             selector,
-            padding = {}
+            padding = {},
+            xLabel = "x-label",
+            yLabel = "y-label"
         } = settings;
         const {
             top = 30,
@@ -27,11 +30,14 @@ export class LineChart {
             bottom,
             right
         };
+        this.xLabel = xLabel;
+        this.yLabel = yLabel;
+        this.labelPadding = labelPadding;
         this.xScale = scaleLinear()
-            .range([0, this.width - this.padding.left - this.padding.right]);
+            .range([0, this.width - this.padding.left - this.padding.right - this.labelPadding]);
         this.yScale = scaleLinear()
-            .range([0, this.height - this.padding.top - this.padding.bottom]);
-        this.translate = [this.padding.left, this.padding.top];
+            .range([0, this.height - this.padding.top - this.padding.bottom - this.labelPadding]);
+        this.translate = [this.padding.left + this.labelPadding, this.padding.top + this.labelPadding];
 
         this.parent
             .attr("width", this.width)
@@ -40,17 +46,17 @@ export class LineChart {
         this.xAxis = new AxisElement(this.parent, {
             direction: AXIS_DIRECTION.TOP,
             selector: ["x-axis"],
-            label: "x-axis",
             scale: this.xScale,
-            translate: this.translate
+            translate: this.translate,
+            padding: this.padding.top
         });
 
         this.yAxis = new AxisElement(this.parent, {
             direction: AXIS_DIRECTION.LEFT,
             selector: ["y-axis"],
-            label: "y-axis",
             scale: this.yScale,
-            translate: this.translate
+            translate: this.translate,
+            padding: this.padding.left
         });
 
         this.line = new LineElement(this.parent, {
@@ -66,8 +72,8 @@ export class LineChart {
         this.xScale.domain([0, 1000]);
         this.yScale.domain([0, 1000]);
 
-        this.xAxis.render([[]]);
-        this.yAxis.render([[]]);
+        this.xAxis.render(this.xLabel);
+        this.yAxis.render(this.yLabel);
         this.line.render(data);
     }
 }

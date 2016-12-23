@@ -4,7 +4,9 @@ import {LineChart} from "./line-chart";
 window.document.addEventListener("DOMContentLoaded", () => {
     let selection = select(window.document.querySelector("#svg"));
     let lineChart = new LineChart(selection, {
-        selector: ["lines"]
+        selector: ["lines"],
+        xLabel: "x-axis",
+        yLabel: "y-axis"
     });
     lineChart.render([
         [
