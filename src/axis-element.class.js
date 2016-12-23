@@ -2,10 +2,10 @@ import {axisTop, axisLeft, axisBottom, axisRight, format} from "d3";
 import {GroupElement} from "./group-element.class";
 
 export const AXIS_DIRECTION = {
-    TOP: 0,
-    LEFT: 1,
-    BOTTOM: 2,
-    RIGHT: 3
+    TOP: Symbol("TOP"),
+    LEFT: Symbol("LEFT"),
+    BOTTOM: Symbol("BOTTOM"),
+    RIGHT: Symbol("RIGHT")
 };
 
 export class AxisElement extends GroupElement {
